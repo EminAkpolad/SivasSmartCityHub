@@ -1,5 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+
 namespace SmartCityHub.Models
 {
     public class Ilan
@@ -14,18 +15,21 @@ namespace SmartCityHub.Models
         public Kategori kategori { get; set; }
         public required string KullaniciId { get; set; }
         public required string ResimUrl { get; set; }
-        public DateTime Tarih { get; set; }=DateTime.Now;
+        public DateTime Tarih { get; set; } = DateTime.Now;
 
-        public bool Aktifmi { get; set; }=true;
+        public bool Aktifmi { get; set; } = true;
 
         public enum IlanTipi
         {
-            Satilik, Kiralik,
+            Satilik,
+            Kiralik,
         }
 
         public enum Kategori
         {
-            Kitap, Elektronik, EvAletleri
+            Kitap,
+            Elektronik,
+            EvAletleri,
         }
     }
 }

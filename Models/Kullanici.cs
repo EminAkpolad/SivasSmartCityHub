@@ -8,14 +8,15 @@ namespace SmartCityHub.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id{get;set;}
-        [Required(ErrorMessage ="Kullanici Adi Boş Bırakılamaz")]
-        public required string KullaniciAdi{get; set;}
+        public required string Id { get; set; }
 
-        public required string Email{get;set;}
-        public required string Password{get;set;}
-        public DateTime CreateAt {get;set;}=DateTime.Now;
+        [Required(ErrorMessage = "Kullanici Adi Boş Bırakılamaz")]
+        public required string KullaniciAdi { get; set; }
 
-        public bool Aktiflik{get;set;}=true;
+        public required string Email { get; set; }
+        public required string Password { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.Now;
+
+        public bool Aktiflik { get; set; } = true;
     }
 }
