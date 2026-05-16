@@ -5,6 +5,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.Configure<SmartCityHub.Settings.MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings")
 );
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder
+        .Configuration.GetSection("RedisSettings:ConnectionString")
+        .Value;
+    options.InstanceName = "SmartCity_";
+});
+
+builder.Services.AddSingleton<SmartCityHub.Services.MongoDbService>();
 
 var app = builder.Build();
 

@@ -8,7 +8,7 @@ namespace SmartCityHub.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string? Id { get; set; }
 
         [Required(ErrorMessage = "Kullanici Adi Boş Bırakılamaz")]
         public required string KullaniciAdi { get; set; }

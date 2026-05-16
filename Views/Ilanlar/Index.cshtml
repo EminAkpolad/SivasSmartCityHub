@@ -1,0 +1,51 @@
+@model List<SmartCityHub.Models.Ilan>
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="fw-bold text-dark"><i class="bi bi-megaphone-fill text-primary"></i> Sivas Öğrenci Pazarı</h2>
+            <p class="text-muted">Cumhuriyet Üniversitesi öğrencileri için ilanlar ve fırsatlar.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/Ilanlar/Ekle" class="btn btn-primary btn-lg shadow-sm">İlan Ver</a>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center py-5 shadow-sm rounded bg-light">
+            <h4 class="text-secondary">Henüz bir ilan yok kanka!</h4>
+            <p>Veritabanına ilk ilanı sen eklemiş olabilirsin.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var ilan in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm item-card">
+                        <img src="@(string.IsNullOrEmpty(ilan.ResimUrl) ? "/images/default-ilan.jpg" : ilan.ResimUrl)" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@ilan.Baslik</h5>
+                            <p class="card-text text-truncate">@ilan.Aciklama</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-info text-dark">@ilan.kategori</span>
+                                <span class="h5 mb-0 text-success fw-bold">@ilan.Fiyat.ToString("N0") ₺</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pb-3">
+                            <small class="text-muted">Eklenme: @ilan.Tarih.ToShortDateString()</small>
+                            <a href="/Ilanlar/Detay/@ilan.Id" class="btn btn-outline-primary btn-sm w-100 mt-2">İncele</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .item-card { transition: transform 0.3s ease; }
+    .item-card:hover { transform: translateY(-5px); }
+</style>

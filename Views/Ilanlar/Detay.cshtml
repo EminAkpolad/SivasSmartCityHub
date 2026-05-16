@@ -1,0 +1,48 @@
+@model SmartCityHub.Models.Ilan
+
+@{
+    ViewData["Title"] = Model.Baslik + " - Detay";
+}
+
+<div class="container mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Ilanlar">İlanlar</a></li>
+            <li class="breadcrumb-item active">@Model.kategori</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm">
+                <img src="@(string.IsNullOrEmpty(Model.ResimUrl) ? "https://via.placeholder.com/800x500" : Model.ResimUrl)" 
+                     class="img-fluid rounded shadow" alt="@Model.Baslik">
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="p-4 bg-white rounded shadow-sm h-100">
+                <h1 class="fw-bold">@Model.Baslik</h1>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-primary fs-6">@Model.Tip</span>
+                    <h2 class="text-success fw-bold mb-0">@Model.Fiyat.ToString("N0") ₺</h2>
+                </div>
+
+                <p class="text-muted">
+                    <i class="bi bi-calendar-event"></i> İlan Tarihi: @Model.Tarih.ToString("dd MMMM yyyy")
+                </p>
+
+                <div class="mt-4">
+                    <h5>Açıklama</h5>
+                    <p class="text-dark" style="white-space: pre-line;">@Model.Aciklama</p>
+                </div>
+
+                <div class="d-grid gap-2 mt-5">
+                    <button class="btn btn-primary btn-lg"><i class="bi bi-chat-dots"></i> Satıcıyla İletişime Geç</button>
+                    <a href="/Ilanlar" class="btn btn-outline-secondary">Listeye Geri Dön</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
