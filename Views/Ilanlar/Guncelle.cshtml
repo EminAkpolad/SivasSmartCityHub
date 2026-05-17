@@ -1,0 +1,59 @@
+@model SmartCityHub.Models.Ilan
+
+@{
+    ViewData["Title"] = "İlanı Güncelle";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">İlan Düzenle: @Model.Baslik</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Guncelle" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Tarih" />
+                        <input type="hidden" asp-for="Aktifmi" />
+
+                        <div class="mb-3">
+                            <label asp-for="Baslik" class="form-label">İlan Başlığı</label>
+                            <input asp-for="Baslik" class="form-control" placeholder="Örn: Sivas Merkezde Kiralık Oda" />
+                            <span asp-validation-for="Baslik" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Aciklama" class="form-label">Açıklama</label>
+                            <textarea asp-for="Aciklama" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Aciklama" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Fiyat" class="form-label">Fiyat (TL)</label>
+                            <input asp-for="Fiyat" class="form-control" type="number" />
+                            <span asp-validation-for="Fiyat" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Konum" class="form-label">Konum / Mahalle</label>
+                            <input asp-for="Konum" class="form-control" />
+                            <span asp-validation-for="Konum" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                            <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

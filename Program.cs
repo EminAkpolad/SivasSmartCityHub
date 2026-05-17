@@ -1,6 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IlanService>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379"; // Redis adresin (genelde budur)
+    options.InstanceName = "SmartCity_";
+});
 
 builder.Services.Configure<SmartCityHub.Settings.MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings")
@@ -27,6 +34,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 app.MapStaticAssets();
+app.UseStaticFiles();
 
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();

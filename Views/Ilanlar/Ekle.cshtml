@@ -12,7 +12,8 @@
                     <h4 class="mb-0">Sivas Smart City - Yeni İlan Formu</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form asp-action="Ekle" method="post">
+                    @* KRİTİK NOKTA: enctype="multipart/form-data" EKLENDİ *@
+                    <form asp-action="Ekle" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label asp-for="Baslik" class="form-label font-weight-bold">İlan Başlığı</label>
                             <input asp-for="Baslik" class="form-control" placeholder="Örn: Sivas Merkez Satılık Kitap" />
@@ -31,11 +32,15 @@
                                 <input asp-for="Fiyat" type="number" class="form-control" />
                                 <span asp-validation-for="Fiyat" class="text-danger"></span>
                             </div>
+
                             <div class="col-md-6 mb-3">
-                                <label asp-for="ResimUrl" class="form-label">Resim URL (Şimdilik Manuel)</label>
-                                <input asp-for="ResimUrl" class="form-control" placeholder="http://..." />
+                                <label class="form-label">İlan Resmi Seç</label>
+                                @* name="resimDosyasi" Controller'daki isimle aynı olmalı *@
+                                <input type="file" name="resimDosyasi" class="form-control" accept="image/*" />
                             </div>
                         </div>
+
+                        @* Eski ResimUrl inputu varsa onu sildik, çünkü yolu biz oluşturuyoruz *@
 
                         <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-success btn-lg">İlanı Yayınla</button>
@@ -49,5 +54,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

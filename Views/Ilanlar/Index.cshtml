@@ -14,8 +14,7 @@
     @if (Model == null || !Model.Any())
     {
         <div class="text-center py-5 shadow-sm rounded bg-light">
-            <h4 class="text-secondary">Henüz bir ilan yok kanka!</h4>
-            <p>Veritabanına ilk ilanı sen eklemiş olabilirsin.</p>
+            <h4 class="text-secondary">Henüz bir ilan yok!</h4>
         </div>
     }
     else
@@ -31,12 +30,23 @@
                             <p class="card-text text-truncate">@ilan.Aciklama</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="badge bg-info text-dark">@ilan.kategori</span>
-                                <span class="h5 mb-0 text-success fw-bold">@ilan.Fiyat.ToString("N0") ₺</span>
+                                <span class="h5 mb-0 text-success fw-bold">@ilan.Fiyat.ToString("N0")</span>
                             </div>
                         </div>
                         <div class="card-footer bg-transparent border-0 pb-3">
-                            <small class="text-muted">Eklenme: @ilan.Tarih.ToShortDateString()</small>
-                            <a href="/Ilanlar/Detay/@ilan.Id" class="btn btn-outline-primary btn-sm w-100 mt-2">İncele</a>
+                            <small class="text-muted d-block mb-2">Eklenme: @ilan.Tarih.ToShortDateString()</small>
+                            
+                            <div class="d-grid gap-2">
+                                <a href="/Ilanlar/Detay/@ilan.Id" class="btn btn-outline-primary btn-sm">İncele</a>
+                                
+                                <div class="d-flex gap-2">
+                                    <a href="/Ilanlar/Guncelle/@ilan.Id" class="btn btn-warning btn-sm flex-grow-1">Düzenle</a>
+
+                                    <form asp-action="Sil" asp-route-id="@ilan.Id" method="post" class="flex-grow-1" onsubmit="return confirm('Bu ilanı silmek istediğine emin misin?');">
+                                        <button type="submit" class="btn btn-danger btn-sm w-100">Sil</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,6 +56,7 @@
 </div>
 
 <style>
-    .item-card { transition: transform 0.3s ease; }
-    .item-card:hover { transform: translateY(-5px); }
+    .item-card { transition: transform 0.3s ease; border-radius: 15px; overflow: hidden; }
+    .item-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+    .card-img-top { height: 200px; object-fit: cover; }
 </style>

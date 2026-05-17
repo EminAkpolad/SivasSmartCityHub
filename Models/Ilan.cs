@@ -20,6 +20,7 @@ namespace SmartCityHub.Models
         public string? KullaniciId { get; set; }
         public string? ResimUrl { get; set; }
         public DateTime Tarih { get; set; } = DateTime.Now;
+        public string? Konum { get; set; }
 
         public bool Aktifmi { get; set; } = true;
 

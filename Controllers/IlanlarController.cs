@@ -7,16 +7,16 @@ namespace SmartCityHub.Controllers
 {
     public class IlanlarController : Controller
     {
-        private readonly MongoDbService _mongoDbService;
+        private readonly IlanService _ilanService;
 
-        public IlanlarController(MongoDbService mongoDbService)
+        public IlanlarController(IlanService ilanService)
         {
-            _mongoDbService = mongoDbService;
+            _ilanService = ilanService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var ilanlar = await _mongoDbService.Ilanlar.Find(_ => true).ToListAsync();
+            var ilanlar = await _ilanService.HepsiniGetir();
             return View(ilanlar);
         }
 
@@ -27,14 +27,32 @@ namespace SmartCityHub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ekle(Ilan YeniIlan)
+        public async Task<IActionResult> Ekle(Ilan YeniIlan, IFormFile? resimDosyasi)
         {
             if (ModelState.IsValid)
             {
+                if (resimDosyasi != null && resimDosyasi.Length > 0)
+                {
+                    var dosyaAdi =
+                        Guid.NewGuid().ToString() + Path.GetExtension(resimDosyasi.FileName);
+
+                    var yol = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        "uploads",
+                        dosyaAdi
+                    );
+                    using (var stream = new FileStream(yol, FileMode.Create))
+                    {
+                        await resimDosyasi.CopyToAsync(stream);
+                    }
+
+                    YeniIlan.ResimUrl = "/uploads/" + dosyaAdi;
+                }
                 YeniIlan.Tarih = DateTime.Now;
                 YeniIlan.Aktifmi = true;
 
-                await _mongoDbService.Ilanlar.InsertOneAsync(YeniIlan);
+                await _ilanService.Ekle(YeniIlan);
 
                 return RedirectToAction("Index");
             }
@@ -49,6 +67,33 @@ namespace SmartCityHub.Controllers
             return View(YeniIlan);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Guncelle(string id)
+        {
+            var ilan = await _ilanService.GetirById(id);
+            if (ilan == null)
+                return NotFound();
+            return View(ilan);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Guncelle(string id, Ilan GuncelIlan)
+        {
+            if (ModelState.IsValid)
+            {
+                await _ilanService.Guncelle(id, GuncelIlan);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(GuncelIlan);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Sil(string id)
+        {
+            await _ilanService.Sil(id);
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Detay(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -56,8 +101,7 @@ namespace SmartCityHub.Controllers
                 return NotFound();
             }
 
-            var ilan = await _mongoDbService.Ilanlar.Find(i => i.Id == id).FirstOrDefaultAsync();
-
+            var ilan = await _ilanService.GetirById(id);
             if (ilan == null)
             {
                 return NotFound();
