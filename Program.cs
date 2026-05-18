@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IlanService>();
+builder.Services.AddScoped<DuyuruService>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
