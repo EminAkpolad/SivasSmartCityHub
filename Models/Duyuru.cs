@@ -3,15 +3,18 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SmartCityHub.Models
 {
+    [BsonIgnoreExtraElements]
     public class Duyuru
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("_id")]
         public string? Id { get; set; }
         public required string Baslik { get; set; }
         public required string Icerik { get; set; }
 
         public string? YayinlananId { get; set; }
+        public string? ResimUrl { get; set; }
 
         public DuyuruKategorisi kategori { get; set; }
         public OnemSeviyesi onem { get; set; }
