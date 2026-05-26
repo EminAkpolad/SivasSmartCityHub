@@ -59,14 +59,55 @@ namespace SmartCityHub.Controllers
             await _duyuruService.Sil(id);
             return RedirectToAction(nameof(Index));
         }
-
-        public async Task<IActionResult> GetirById(string id)
+        [HttpGet]
+        public async Task<IActionResult> Detay(string id)
         {
-            var duyuru = await _duyuruService.GetirById(id);
-            if (duyuru == null)
+            if (string.IsNullOrEmpty(id))
+            {
                 return NotFound();
-
+            }
+            var duyuru = await _duyuruService.GetirById(id);
+            if (duyuru == null){
+                return NotFound();
+            }
             return View(duyuru);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Guncelle(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            var duyuru=await _duyuruService.GetirById(id);
+            if (duyuru == null)
+            {
+                return NotFound();
+            }
+            return View(duyuru);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Guncelle(Duyuru guncelDuyuru,IFormFile? Resim)
+        {
+            if (ModelState.IsValid)
+            {
+                if(Resim!=null && Resim.Length > 0)
+                {
+                    var dosyaAdi=Guid.NewGuid().ToString() + Path.GetExtension(Resim.FileName);
+                    var yol= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","uploads",dosyaAdi);
+
+                    using (var stream=new FileStream(yol, FileMode.Create))
+                    {
+                        await Resim.CopyToAsync(stream);
+                    }
+                    guncelDuyuru.ResimUrl="/uploads/"+dosyaAdi;
+                }
+                await _duyuruService.Guncelle(guncelDuyuru);
+                return RedirectToAction("Index");
+            }
+            return View(guncelDuyuru);
         }
     }
 }

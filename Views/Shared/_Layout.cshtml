@@ -1,53 +1,111 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SmartCityHub</title>
-    <script type="importmap"></script>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SmartCityHub.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc; /* Slate 50 - En trend temiz gri tonu */
+            color: #0f172a; /* Slate 900 - Derin kurumsal koyu mavi */
+            letter-spacing: -0.01em;
+        }
+        .navbar-brand-modern {
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: -0.03em;
+            color: #0f172a !important;
+        }
+        .nav-link-modern {
+            color: #334155 !important; /* Slate 700 */
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.15s ease;
+        }
+        .nav-link-modern:hover {
+            color: #e21d3c !important; /* Vurgu kırmızısı */
+        }
+        .btn-modern-primary {
+            background-color: #e21d3c;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            border: none;
+            transition: background-color 0.15s ease;
+        }
+        .btn-modern-primary:hover {
+            background-color: #b91c1c;
+            color: #ffffff;
+        }
+        .footer-modern {
+            background-color: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SmartCityHub</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 shadow-sm">
+            <div class="container">
+                <a class="navbar-brand-modern d-flex align-items-center gap-2 text-decoration-none" asp-controller="Home" asp-action="Index">
+                    <span class="d-inline-block bg-dark text-white rounded px-2 py-1 fs-6" style="letter-spacing: 0;">S</span>
+                    <span>SMART<span class="text-danger">HUB</span></span>
+                </a>
+                
+                <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Ilanlar" asp-action="Index">İlanlar</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Duyuru" asp-action="Index">Duyurular</a>
+                
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link nav-link-modern" asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                        <li class="nav-item"><a class="nav-link nav-link-modern" asp-controller="Duyuru" asp-action="Index">Duyurular</a></li>
+                        <li class="nav-item"><a class="nav-link nav-link-modern" asp-controller="Ilanlar" asp-action="Index">İlanlar</a></li>
+                        <li class="nav-item"><a class="nav-link nav-link-modern" asp-controller="Etkinlik" asp-action="Index">Etkinlikler</a></li>
+                        <li class="nav-item"><a class="nav-link nav-link-modern" asp-controller="Bolge" asp-action="Index">Şehir Rehberi</a></li>
+                        <li class="nav-item ms-lg-2">
+                            <a class="btn-modern-primary text-decoration-none d-inline-block" asp-controller="Oneri" asp-action="Ekle">Öneri Bildir</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="flex-grow-1">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-modern py-4 text-muted mt-auto">
         <div class="container">
-            &copy; 2026 - SmartCityHub - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row g-3 align-items-center">
+                <div class="col-12 col-md-6 text-center text-md-start">
+                    <span class="fw-semibold text-dark">Sivas Smart-City & Student Hub</span>
+                    <span class="mx-2 text-muted">|</span> 
+                    <span>© 2026 Cumhuriyet Üniversitesi</span>
+                </div>
+                <div class="col-12 col-md-6 text-center text-md-end text-secondary">
+                    Teknik Bilimler MYO • Bitirme Projesi
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

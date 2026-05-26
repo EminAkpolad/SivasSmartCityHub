@@ -1,7 +1,223 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<style>
+    .hero-section {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 5rem 0;
+    }
+    .search-container {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background-color: #ffffff;
+        padding: 0.35rem;
+    }
+    .search-container:focus-within {
+        border-color: #94a3b8;
+        box-shadow: 0 0 0 1px #94a3b8;
+    }
+    .widget-card {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1.25rem;
+    }
+    .dashboard-panel {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 2rem;
+    }
+    .panel-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+    }
+    .btn-panel-link {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.15s ease;
+    }
+    .btn-panel-link:hover {
+        color: #e21d3c;
+    }
+    .data-row {
+        padding: 1rem 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .data-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .data-row:first-child {
+        padding-top: 0;
+    }
+    .text-muted-custom {
+        color: #64748b;
+        font-size: 0.875rem;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="fw-bold text-dark display-5 mb-3" style="letter-spacing: -0.04em;">Merkezi Veri ve İletişim Portalı</h1>
+        <p class="text-muted fs-5 mb-4 mx-auto" style="max-width: 620px; font-weight: 400; line-height: 1.6;">
+            Sivas Cumhuriyet Üniversitesi yerleşkesi veri akışı, akademik bilgilendirmeler, ilan yönetimi ve şehir entegrasyonu.
+        </p>
+        
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-5">
+                <div class="input-group search-container">
+                    <span class="input-group-text bg-transparent border-0 text-muted ps-3"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control border-0 bg-transparent text-dark fs-6 shadow-none" placeholder="Sistem kayıtlarında arama yapın...">
+                    <button class="btn btn-dark fw-semibold px-4 rounded" style="font-size: 0.9rem;" type="button">Ara</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+
+    <div class="row g-3 mb-5">
+        <div class="col-12 col-md-4">
+            <div class="widget-card d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted-custom d-block fw-medium mb-1">Anlık Hava Durumu</span>
+                    <span class="fw-bold text-dark fs-4">18.0°C</span>
+                </div>
+                <div class="text-secondary fs-2 pe-2"><i class="bi bi-cloud-sun"></i></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="widget-card d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted-custom d-block fw-medium mb-1">Günün Öğrenci Menüsü</span>
+                    <span class="fw-bold text-dark fs-5">Sivas Köfte & Pilav</span>
+                </div>
+                <span class="badge bg-light text-dark border px-2 py-1" style="font-size: 0.8rem;">15.00 TL</span>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="widget-card d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted-custom d-block fw-medium mb-1">Yerleşke İçi Ulaşım</span>
+                    <span class="fw-bold text-success fs-5">Seferler Aktif</span>
+                </div>
+                <div class="text-success fs-3 pe-2"><i class="bi bi-bus-front"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        
+        <div class="col-12 col-md-6">
+            <div class="dashboard-panel h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="panel-title"><i class="bi bi-megaphone me-2"></i>Son Duyurular</h3>
+                    <a href="/Duyuru/Index" class="btn-panel-link">Tüm Listeyi Gör <i class="bi bi-arrow-right small"></i></a>
+                </div>
+                <div class="py-2">
+                    <div class="data-row">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge rounded-1 bg-danger-subtle text-danger px-2 py-1 fw-bold" style="font-size: 0.75rem;">ACİL</span>
+                            <span class="text-muted small">23.05.2026</span>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1">Bahar Şenlikleri Konser Programı</h6>
+                        <p class="text-muted-custom mb-0 text-truncate">Kampüs stadyum merkezi etkinlik takvimi ve katılım detayları...</p>
+                    </div>
+                    <div class="data-row">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge rounded-1 bg-light text-dark border px-2 py-1 fw-bold" style="font-size: 0.75rem;">BİLGİ</span>
+                            <span class="text-muted small">22.05.2026</span>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1">Bütünleme Sınav Takvimi Hakkında</h6>
+                        <p class="text-muted-custom mb-0 text-truncate">Teknik Bilimler Meslek Yüksekokulu sınav programı erişime açılmıştır...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="dashboard-panel h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="panel-title"><i class="bi bi-shop me-2"></i>Aktif İlanlar</h3>
+                    <a href="/Ilanlar/Index" class="btn-panel-link">Tümünü İncele <i class="bi bi-arrow-right small"></i></a>
+                </div>
+                <div class="py-2">
+                    <div class="data-row d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Alibaba Mahallesinde Kiralık Oda</h6>
+                            <p class="text-muted-custom mb-0">Eşyalı, merkezi konumlu daire paylaşımlı...</p>
+                        </div>
+                        <span class="fw-bold text-dark border bg-light px-3 py-1 rounded small">4.500 TL</span>
+                    </div>
+                    <div class="data-row d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Ortopedik Oyuncu Koltuğu</h6>
+                            <p class="text-muted-custom mb-0">Deforme olmamış, temiz durumda teknik donanım...</p>
+                        </div>
+                        <span class="fw-bold text-dark border bg-light px-3 py-1 rounded small">3.200 TL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="dashboard-panel h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="panel-title"><i class="bi bi-calendar-event me-2"></i>Kampüs Etkinlikleri</h3>
+                    <a href="/Etkinlik/Index" class="btn-panel-link">Etkinlik Takvimi <i class="bi bi-arrow-right small"></i></a>
+                </div>
+                <div class="py-1">
+                    <div class="data-row d-flex align-items-center gap-3">
+                        <div class="bg-dark text-white text-center rounded p-2 fw-bold" style="min-width: 48px; font-size: 0.85rem; line-height: 1.2;">
+                            28<br><span class="small fw-normal text-muted" style="font-size: 0.65rem;">MAY</span>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Savunma Sanayii ve Kariyer Paneli</h6>
+                            <p class="text-muted-custom mb-0">Kültür Merkezi A Salonu • Saat: 14:00</p>
+                        </div>
+                    </div>
+                    <div class="data-row d-flex align-items-center gap-3">
+                        <div class="bg-dark text-white text-center rounded p-2 fw-bold" style="min-width: 48px; font-size: 0.85rem; line-height: 1.2;">
+                            02<br><span class="small fw-normal text-muted" style="font-size: 0.65rem;">HAZ</span>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Üniversiteler Arası CS2 Turnuvası</h6>
+                            <p class="text-muted-custom mb-0">Mühendislik Fakültesi Laboratuvarları • Saat: 18:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="dashboard-panel h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h3 class="panel-title mb-2"><i class="bi bi-geo-alt me-2"></i>Şehir & Yerleşke Rehberi</h3>
+                    <p class="text-secondary small line-height-lg mb-0">
+                        Fakülteler, idari birimler, sosyal alanlar ve entegre taşıma hatlarının coğrafi koordinatlarını harita katmanı üzerinden anlık izleyin.
+                    </p>
+                </div>
+                <div class="row g-2 mt-3">
+                    <div class="col-12">
+                        <a href="/Bolge/Index" class="btn btn-dark w-100 py-2 fw-semibold rounded shadow-none" style="font-size: 0.95rem;">İnteraktif Haritayı Aç</a>
+                    </div>
+                    <div class="col-6">
+                        <a href="/Oneri/Ekle" class="btn btn-outline-secondary w-100 py-2 small fw-medium" style="font-size: 0.85rem;">Geri Bildirim Yap</a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="btn btn-outline-secondary w-100 py-2 small fw-medium" style="font-size: 0.85rem;">Öğrenci Toplulukları</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

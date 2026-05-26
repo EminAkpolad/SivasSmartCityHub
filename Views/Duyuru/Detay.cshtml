@@ -1,0 +1,66 @@
+@model SmartCityHub.Models.Duyuru
+
+@{
+    ViewData["Title"] = Model.Baslik + " - Duyuru Detayı";
+}
+
+<div class="container my-5" style="max-width: 850px;">
+    <div class="mb-3 text-center text-sm-start">
+        <a href="/Duyuru/Index" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Listeye Geri Dön
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden bg-white">
+        
+        <div class="bg-light text-center border-bottom">
+            <img src="@(string.IsNullOrEmpty(Model.ResimUrl) ? "https://via.placeholder.com/800x400?text=Duyuru+Afisi" : Model.ResimUrl)" 
+                 alt="@Model.Baslik" class="img-fluid w-100" style="max-height: 350px; object-fit: cover;">
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+            
+            <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-sm-start mb-3">
+                <span class="badge bg-primary px-3 py-2 fs-6">📌 @Model.kategori</span>
+                
+                @if (Model.onem == SmartCityHub.Models.Duyuru.OnemSeviyesi.Acil)
+                {
+                    <span class="badge bg-danger px-3 py-2 fs-6">🚨 Acil</span>
+                }
+                else if (Model.onem == SmartCityHub.Models.Duyuru.OnemSeviyesi.Uyari)
+                {
+                    <span class="badge bg-warning text-dark px-3 py-2 fs-6">⚠️ Uyarı</span>
+                }
+                else
+                {
+                    <span class="badge bg-info text-dark px-3 py-2 fs-6">ℹ️ Bilgi</span>
+                }
+            </div>
+
+            <h1 class="fw-bold text-dark text-center text-sm-start mb-4">@Model.Baslik</h1>
+
+            <div class="row g-3 p-3 bg-light rounded-3 mb-4 text-center text-sm-start text-muted small">
+                <div class="col-12 col-sm-6">
+                    <div class="fw-bold text-dark">📅 Yayınlanma Tarihi</div>
+                    <div>@Model.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="fw-bold text-dark">⏳ Yayından Kalkma Tarihi</div>
+                    <div>@Model.BitisTarihi.ToString("dd.MM.yyyy")</div>
+                </div>
+            </div>
+
+            <div class="text-dark fs-5 lh-lg mb-5" style="white-space: pre-wrap;">@Model.Icerik</div>
+
+            <div class="border-top pt-4 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <span class="text-muted small">Kayıt id: <code>@Model.Id</code></span>
+                
+                <div class="d-flex gap-2 w-100 w-sm-auto justify-content-end">
+                    <a href="/Duyuru/Guncelle/@Model.Id" class="btn btn-warning px-4">Düzenle</a>
+                    <a href="/Duyuru/Index" class="btn btn-secondary px-4">Kapat</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

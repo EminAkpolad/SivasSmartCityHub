@@ -1,0 +1,76 @@
+@model SmartCityHub.Models.Duyuru
+
+@{
+    ViewData["Title"] = "Duyuru Düzenle";
+}
+
+<div class="container my-5" style="max-width: 700px;">
+    <div class="card shadow-sm border-0 bg-white p-3 p-sm-4 rounded-3">
+        <div class="card-body">
+            <div class="text-center text-sm-start mb-4">
+                <h3 class="fw-bold mb-1">✏️ Duyuru Bilgilerini Düzenle</h3>
+                <p class="text-muted small">Mevcut duyuru verilerini güncellemek için aşağıdaki alanları değiştir başkan.</p>
+                <hr>
+            </div>
+
+            <form asp-controller="Duyuru" asp-action="Guncelle" method="post" enctype="multipart/form-data">
+                
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="OlusturmaTarihi" />
+                <input type="hidden" asp-for="ResimUrl" />
+
+                <div class="mb-3">
+                    <label asp-for="Baslik" class="form-label fw-semibold">Duyuru Başlığı</label>
+                    <input asp-for="Baslik" type="text" class="form-control" required />
+                    <span asp-validation-for="Baslik" class="text-danger small"></span>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-sm-6">
+                        <label asp-for="kategori" class="form-label fw-semibold">Kategori</label>
+                        <select asp-for="kategori" class="form-select" 
+                                asp-items="Html.GetEnumSelectList<SmartCityHub.Models.Duyuru.DuyuruKategorisi>()">
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <label asp-for="onem" class="form-label fw-semibold">Önem Seviyesi</label>
+                        <select asp-for="onem" class="form-select" 
+                                asp-items="Html.GetEnumSelectList<SmartCityHub.Models.Duyuru.OnemSeviyesi>()">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="BitisTarihi" class="form-label fw-semibold">Yayından Kalkma Tarihi</label>
+                    <input asp-for="BitisTarihi" type="date" class="form-control" 
+                           value="@Model.BitisTarihi.ToString("yyyy-MM-dd")" required />
+                    <span asp-validation-for="BitisTarihi" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Icerik" class="form-label fw-semibold">Duyuru Metni / İçerik</label>
+                    <textarea asp-for="Icerik" class="form-control" rows="4" required></textarea>
+                    <span asp-validation-for="Icerik" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Duyuru Görseli</label>
+                    @if (!string.IsNullOrEmpty(Model.ResimUrl))
+                    {
+                        <div class="mb-2 p-2 border rounded bg-light text-center text-sm-start small text-muted">
+                            📁 Mevcut Dosya: <code>@Model.ResimUrl</code>
+                        </div>
+                    }
+                    <input type="file" name="Resim" class="form-control" accept="image/*" />
+                    <div class="form-text small text-muted">Afişi değiştirmek istemiyorsan yeni dosya seçme kanka.</div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 justify-content-end pt-2 border-top">
+                    <a href="/Duyuru/Index" class="btn btn-outline-secondary px-4 w-100 w-sm-auto">Vazgeç</a>
+                    <button type="submit" class="btn btn-warning px-5 w-100 w-sm-auto shadow-sm">Değişiklikleri Kaydet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

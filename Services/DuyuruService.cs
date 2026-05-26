@@ -57,9 +57,9 @@ public class DuyuruService
         }
     }
 
-    public async Task Guncelle(string id, Duyuru GuncelDuyuru)
+    public async Task Guncelle(Duyuru GuncelDuyuru)
     {
-        var result = await _duyurular.ReplaceOneAsync(i => i.Id == id, GuncelDuyuru);
+        var result = await _duyurular.ReplaceOneAsync(i => i.Id == GuncelDuyuru.Id, GuncelDuyuru);
 
         if (result.IsAcknowledged && result.ModifiedCount > 0)
         {
