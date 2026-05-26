@@ -3,10 +3,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IlanService>();
 builder.Services.AddScoped<DuyuruService>();
+builder.Services.AddScoped<OneriService>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = "localhost:6379"; // Redis adresin (genelde budur)
+    options.Configuration = "localhost:6379"; 
     options.InstanceName = "SmartCity_";
 });
 

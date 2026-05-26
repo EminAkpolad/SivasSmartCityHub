@@ -1,0 +1,84 @@
+@model List<SmartCityHub.Models.Oneri>
+
+@{
+    ViewData["Title"] = "Öneri ve Şikayetler";
+}
+
+
+<div class="panel-header mb-5">
+    <div class="container">
+        <div class="row align-items-center g-3 text-center text-md-start">
+            <div class="col-12 col-md-8">
+                <h1 class="fw-bold text-dark mb-1" style="letter-spacing: -0.03em;">Öneri & Geri Bildirim Merkezi</h1>
+                <p class="text-muted mb-0">Kampüs ve şehir yönetimini iyileştirmek için yapılan tüm bildirimler.</p>
+            </div>
+            <div class="col-12 col-md-4 text-center text-md-end">
+                <a href="/Oneri/Ekle" class="btn btn-dark fw-semibold px-4 py-2 rounded shadow-none">
+                    <i class="bi bi-plus-lg me-1"></i> Yeni Öneri Bildir
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center p-5 bg-white rounded-3 border">
+            <div class="fs-1 text-muted mb-3"><i class="bi bi-chat-left-dots"></i></div>
+            <h5 class="fw-bold text-dark">Henüz Bildirim Yapılmadı</h5>
+            <p class="text-muted small mb-0">Sistemde kayıtlı herhangi bir öneri veya şikayet kaydı bulunmamaktadır.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var oneri in Model)
+            {
+                <div class="col-12">
+                    <div class="oneri-card p-4">
+                        <div class="row align-items-start g-3">
+                            
+                            <div class="col-12 col-sm-auto text-sm-center">
+                                <div class="score-badge d-inline-block text-center">
+                                    <span class="d-block small text-muted fw-normal" style="font-size: 11px;">Değerlendirme</span>
+                                    <span class="fs-5"><i class="bi bi-star-fill text-warning me-1"></i>@oneri.Puan</span>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm flex-grow-1">
+                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                    <h5 class="fw-bold text-dark mb-0">@oneri.Baslik</h5>
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-light text-secondary border px-2 py-1">@oneri.Kategori</span>
+                                        <span class="badge bg-light text-muted border px-2 py-1 fw-normal">@oneri.Tarih.ToString("dd.MM.yyyy")</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-secondary small mb-3" style="line-height: 1.5;">@oneri.Aciklama</p>
+                                
+                                <div class="text-muted border-top pt-2" style="font-size: 12px;">
+                                    <span class="me-3"><strong>Gönderen Ref ID:</strong> <code>@oneri.GonderenId</code></span>
+                                    <span><strong>Hedef Birim ID:</strong> <code>@oneri.HedefId</code></span>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-auto text-end align-self-center w-100 w-md-auto">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <a href="/Oneri/Guncelle/@oneri.Id" class="btn btn-sm btn-outline-secondary px-3">Düzenle</a>
+                                    
+                                    <form asp-controller="Oneri" asp-action="Sil" asp-route-id="@oneri.Id" method="post" 
+                                          onsubmit="return confirm('Bu geri bildirimi silmek istediğinize emin misiniz?');" class="m-0">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash3"></i> Kaldır</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

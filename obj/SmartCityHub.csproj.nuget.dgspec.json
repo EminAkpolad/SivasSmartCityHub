@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AKPOLAD\\SmartCityHub\\SmartCityHub.csproj": {}
+    "C:\\Users\\AKPOLAD\\SivasSmartCityHub\\SmartCityHub.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AKPOLAD\\SmartCityHub\\SmartCityHub.csproj": {
+    "C:\\Users\\AKPOLAD\\SivasSmartCityHub\\SmartCityHub.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AKPOLAD\\SmartCityHub\\SmartCityHub.csproj",
+        "projectUniqueName": "C:\\Users\\AKPOLAD\\SivasSmartCityHub\\SmartCityHub.csproj",
         "projectName": "SmartCityHub",
-        "projectPath": "C:\\Users\\AKPOLAD\\SmartCityHub\\SmartCityHub.csproj",
+        "projectPath": "C:\\Users\\AKPOLAD\\SivasSmartCityHub\\SmartCityHub.csproj",
         "packagesPath": "C:\\Users\\AKPOLAD\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AKPOLAD\\SmartCityHub\\obj\\",
+        "outputPath": "C:\\Users\\AKPOLAD\\SivasSmartCityHub\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -78,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

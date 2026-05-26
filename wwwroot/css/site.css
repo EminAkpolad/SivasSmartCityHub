@@ -29,3 +29,26 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.panel-header {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 3rem 0;
+    }
+    .oneri-card {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        transition: border-color 0.15s ease;
+    }
+    .oneri-card:hover {
+        border-color: #cbd5e1;
+    }
+    .score-badge {
+        background-color: #f1f5f9;
+        color: #334155;
+        font-weight: 700;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+    }

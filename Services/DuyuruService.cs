@@ -61,7 +61,7 @@ public class DuyuruService
     {
         var result = await _duyurular.ReplaceOneAsync(i => i.Id == GuncelDuyuru.Id, GuncelDuyuru);
 
-        if (result.IsAcknowledged && result.ModifiedCount > 0)
+        if (result.IsAcknowledged && result.MatchedCount > 0)
         {
             await _cache.RemoveAsync(_cacheKey);
         }

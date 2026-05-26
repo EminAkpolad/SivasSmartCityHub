@@ -1,0 +1,67 @@
+@model SmartCityHub.Models.Oneri
+
+@{
+    ViewData["Title"] = "Geri Bildirimi Düzenle";
+}
+
+<div class="container my-5" style="max-width: 650px;">
+    <div class="bg-white border rounded-3 p-4 p-sm-5 shadow-sm">
+        
+        <div class="mb-4">
+            <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.03em;">Kaydı Güncelle</h3>
+            <p class="text-muted small">Mevcut geri bildirim verilerini aşağıdan düzenleyebilirsiniz.</p>
+            <hr class="text-muted">
+        </div>
+
+        <form asp-controller="Oneri" asp-action="Guncelle" method="post">
+            
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Tarih" />
+
+            <div class="row g-3 mb-3">
+                <div class="col-12 col-sm-6">
+                    <label asp-for="GonderenId" class="form-label small fw-semibold text-dark">Gönderici Kimlik (ID)</label>
+                    <input asp-for="GonderenId" class="form-control shadow-none fs-6 py-2" required />
+                    <span asp-validation-for="GonderenId" class="text-danger small"></span>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label asp-for="HedefId" class="form-label small fw-semibold text-dark">Hedef Birim Kimlik (ID)</label>
+                    <input asp-for="HedefId" class="form-control shadow-none fs-6 py-2" required />
+                    <span asp-validation-for="HedefId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Baslik" class="form-label small fw-semibold text-dark">Bildirim Başlığı</label>
+                <input asp-for="Baslik" class="form-control shadow-none fs-6 py-2" required />
+                <span asp-validation-for="Baslik" class="text-danger small"></span>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-12 col-sm-6">
+                    <label asp-for="Kategori" class="form-label small fw-semibold text-dark">Kategori</label>
+                    <select asp-for="Kategori" class="form-select shadow-none py-2" 
+                            asp-items="Html.GetEnumSelectList<SmartCityHub.Models.Oneri.OneriKategorisi>()">
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label asp-for="Puan" class="form-label small fw-semibold text-dark">Değerlendirme Puanı (1-5)</label>
+                    <input asp-for="Puan" type="number" min="1" max="5" class="form-control shadow-none py-2" required />
+                    <span asp-validation-for="Puan" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Aciklama" class="form-label small fw-semibold text-dark">Açıklama / Detaylı Metin</label>
+                <textarea asp-for="Aciklama" class="form-control shadow-none small text-dark" rows="5" required></textarea>
+                <span asp-validation-for="Aciklama" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 justify-content-end pt-3 border-top">
+                <a href="/Oneri/Index" class="btn btn-light border px-4 py-2 small fw-semibold">Vazgeç</a>
+                <button type="submit" class="btn btn-danger text-white px-4 py-2 small fw-semibold shadow-none">Değişiklikleri Kaydet</button>
+            </div>
+
+        </form>
+    </div>
+</div>
