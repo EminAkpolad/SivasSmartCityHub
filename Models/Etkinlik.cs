@@ -15,6 +15,8 @@ namespace SmartCityHub.Models
         public required string OlusturanId { get; set; }
 
         public DateTime TarihSaat { get; set; }
+        public string? ResimUrl { get; set; }
+
         public required string Konum { get; set; }
         public int Kapasite { get; set; }
 
