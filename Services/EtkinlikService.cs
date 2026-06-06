@@ -35,8 +35,9 @@ public class EtkinlikService
         return etkinlikler;
     }
 
-    public async Task Ekle(Etkinlik YeniEtkinlik)
+    public async Task Ekle(Etkinlik YeniEtkinlik ,string kullaniciId)
     {
+        YeniEtkinlik.kullaniciId=kullaniciId;
         YeniEtkinlik.TarihSaat=DateTime.Now;
         await _etkinlikler.InsertOneAsync(YeniEtkinlik);
         await _cache.RemoveAsync(_cacheKey);

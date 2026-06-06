@@ -1,6 +1,7 @@
 using DnsClient.Protocol;
 using Microsoft.AspNetCore.Mvc;
 using SmartCityHub.Models;
+using System.Security.Claims;
 
 namespace SmartCityHub.Controllers
 {
@@ -27,6 +28,8 @@ namespace SmartCityHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Ekle(Etkinlik yeniEtkinlik,IFormFile? Resim)
         {
+            var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
                 if(Resim!=null && Resim.Length > 0)
@@ -47,7 +50,7 @@ namespace SmartCityHub.Controllers
                     yeniEtkinlik.ResimUrl="/uploads/"+dosyaAdi;
                 }
 
-                await _etkinlikService.Ekle(yeniEtkinlik);
+                await _etkinlikService.Ekle(yeniEtkinlik,kullaniciId);
                 return RedirectToAction("Index");
             }
             return View(yeniEtkinlik);
@@ -86,10 +89,30 @@ namespace SmartCityHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Guncelle(Etkinlik guncelEtkinlik,IFormFile? Resim)
         {
+            var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
-                if(Resim!=null && Resim.Length>0)
+                if(Resim!=null && Resim.Length > 0)
+                {
+                    var dosyaAdi=Guid.NewGuid().ToString() + Path.GetExtension(Resim.FileName);
+                    var yol=Path.Combine(
+                     Directory.GetCurrentDirectory(),
+                     "wwwroot",
+                     "uploads",
+                     dosyaAdi   
+                    );
+
+                    using (var stream=new FileStream(yol, FileMode.Create))
+                    {
+                        await Resim.CopyToAsync(stream);
+                    }
+                    guncelEtkinlik.ResimUrl="/uploads/"+dosyaAdi;
+                }
+                await _etkinlikService.Guncelle(guncelEtkinlik);
+                return RedirectToAction("Index");
             }
+            return View(guncelEtkinlik);
         }
     }
 }

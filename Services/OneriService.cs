@@ -38,8 +38,9 @@ public class OneriService
         return oneriler;
     }
 
-    public async Task Ekle(Oneri YeniOneri)
+    public async Task Ekle(Oneri YeniOneri,string kullaniciId)
     {
+        YeniOneri.kullaniciId=kullaniciId;
         YeniOneri.Tarih=DateTime.Now;
         await _oneriler.InsertOneAsync(YeniOneri);
         await _cache.RemoveAsync(_cacheKey);
@@ -66,5 +67,10 @@ public class OneriService
     public async Task<Oneri?> GetirById(string id)
     {
         return await _oneriler.Find(i=>i.Id==id).FirstOrDefaultAsync();
+    }
+
+    public async Task<List<Oneri>> KullanicininOnerileriniGetir(string kullaniciId)
+    {
+        return await _oneriler.Find(i => i.kullaniciId == kullaniciId).ToListAsync();
     }
 }

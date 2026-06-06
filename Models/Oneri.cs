@@ -12,6 +12,9 @@ namespace SmartCityHub.Models
         public required string HedefId { get; set; }
         public required string Baslik { get; set; }
         public required string Aciklama { get; set; }
+        public string? Icerik { get; set; }
+
+        public string kullaniciId { get; set; }
 
         [BsonRepresentation(BsonType.Int32)]
         public int Puan { get; set; }

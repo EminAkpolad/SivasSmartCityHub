@@ -13,6 +13,9 @@ namespace SmartCityHub.Models
         public required string Baslik { get; set; }
         public required string Aciklama { get; set; }
 
+        public string? Icerik { get; set; }
+
+
         [BsonRepresentation(BsonType.Decimal128)]
         public decimal Fiyat { get; set; }
         public IlanTipi Tip { get; set; }

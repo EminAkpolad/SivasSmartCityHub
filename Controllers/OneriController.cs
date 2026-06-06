@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartCityHub.Models;
+using System.Security.Claims;
 
 namespace SmartCityHub.Controllers
 {
@@ -27,9 +28,11 @@ namespace SmartCityHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Ekle(Oneri YeniOneri)
         {
+              var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
-                await _oneriService.Ekle(YeniOneri);
+                await _oneriService.Ekle(YeniOneri,kullaniciId);
                 return RedirectToAction(nameof(Index));
             }
             return View(YeniOneri);

@@ -1,0 +1,93 @@
+@model SmartCityHub.Models.OgrenciProfil
+@{
+    ViewData["Title"] = "Profilim";
+    var k = (SmartCityHub.Models.Kullanici)ViewBag.Kullanici;
+}
+
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-2 text-center">
+            <div class="bg-light d-inline-flex align-items-center justify-content-center rounded-circle border border-danger border-3" style="width: 120px; height: 120px;">
+                <i class="bi bi-person-circle display-2 text-danger"></i>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <h1 class="fw-bolder">@k.KullaniciAdi</h1>
+            <p class="text-muted fs-5"><i class="bi bi-envelope-fill me-2"></i>@k.Email</p>
+            <a href="#" class="btn btn-outline-dark btn-sm rounded-pill px-4">Profili Düzenle</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4 p-4">
+                <h5 class="fw-bold mb-3 text-primary"><i class="bi bi-info-circle me-2"></i>Öğrenci Bilgileri</h5>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-3"><strong>Bölüm:</strong><br> @Model.Bolum</li>
+                    <li class="mb-3"><strong>Seviye:</strong><br> @Model.Seviye. Sınıf</li>
+                    <li><strong>Hakkında:</strong><br> <small class="text-muted">@Model.Hakkinda</small></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 pt-4">
+                    <ul class="nav nav-pills gap-2" id="profilTab">
+                        <li class="nav-item">
+                            <button class="nav-link active fw-bold" id="btn-yayin" onclick="sekmeDegistir('yayin')">İlanlarım</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-bold" id="btn-proje" onclick="sekmeDegistir('proje')">Önerilerim</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body p-4" style="min-height: 400px;">
+                    <div class="profil-panel" id="panel-yayin">
+                        <div class="row g-3">
+                            @foreach (var ilan in (List<SmartCityHub.Models.Ilan>)ViewBag.Ilanlarim)
+                            {
+                                <div class="col-12">
+                                    <div class="card border-0 bg-light p-3">
+                                        <h6 class="fw-bold text-dark m-0">@ilan.Baslik</h6>
+                                        <p class="text-muted small my-1">@ilan.Icerik</p>
+                                        <small class="text-secondary"><i class="bi bi-calendar-event me-1"></i> @ilan.Tarih.ToString("dd.MM.yyyy")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="profil-panel" id="panel-proje" style="display: none;">
+                        <div class="row g-3">
+                            @foreach (var oneri in (List<SmartCityHub.Models.Oneri>)ViewBag.Onerilerim)
+                            {
+                                <div class="col-12">
+                                    <div class="card border-0 bg-light p-3">
+                                        <h6 class="fw-bold text-dark m-0">@oneri.Baslik</h6>
+                                        <p class="text-muted small my-1">@oneri.Icerik</p>
+                                        <small class="text-secondary"><i class="bi bi-calendar-event me-1"></i> @oneri.Tarih.ToString("dd.MM.yyyy")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function sekmeDegistir(panelAdi) {
+        document.getElementById('panel-yayin').style.display = 'none';
+        document.getElementById('panel-proje').style.display = 'none';
+        
+        document.getElementById('btn-yayin').classList.remove('active');
+        document.getElementById('btn-proje').classList.remove('active');
+
+        document.getElementById('panel-' + panelAdi).style.display = 'block';
+        document.getElementById('btn-' + panelAdi).classList.add('active');
+    }
+</script>

@@ -19,39 +19,30 @@ public class IlanService
     public async Task<List<Ilan>> HepsiniGetir()
     {
         var cachedIlanlar = await _cache.GetStringAsync(_cacheKey);
-
         if (!string.IsNullOrEmpty(cachedIlanlar))
         {
-            return JsonSerializer.Deserialize<List<Ilan>>(cachedIlanlar);
+            return JsonSerializer.Deserialize<List<Ilan>>(cachedIlanlar)!;
         }
 
         var ilanlar = await _ilanlar.Find(_ => true).ToListAsync();
-
-        var cacheOptions = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
-        };
-
-        var JsonIlanlar = JsonSerializer.Serialize(ilanlar);
-        await _cache.SetStringAsync(_cacheKey, JsonIlanlar, cacheOptions);
-
+        var cacheOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) };
+        
+        await _cache.SetStringAsync(_cacheKey, JsonSerializer.Serialize(ilanlar), cacheOptions);
         return ilanlar;
     }
 
-    public async Task Ekle(Ilan YeniIlan)
+    public async Task Ekle(Ilan YeniIlan, string kullaniciId)
     {
+        YeniIlan.KullaniciId = kullaniciId;
         YeniIlan.Tarih = DateTime.Now;
         YeniIlan.Aktifmi = true;
-
         await _ilanlar.InsertOneAsync(YeniIlan);
-
         await _cache.RemoveAsync(_cacheKey);
     }
 
     public async Task Sil(string id)
     {
         var result = await _ilanlar.DeleteOneAsync(i => i.Id == id);
-
         if (result.IsAcknowledged && result.DeletedCount > 0)
         {
             await _cache.RemoveAsync(_cacheKey);
@@ -61,7 +52,6 @@ public class IlanService
     public async Task Guncelle(string id, Ilan GuncelIlan)
     {
         var result = await _ilanlar.ReplaceOneAsync(i => i.Id == id, GuncelIlan);
-
         if (result.IsAcknowledged && result.ModifiedCount > 0)
         {
             await _cache.RemoveAsync(_cacheKey);
@@ -71,5 +61,10 @@ public class IlanService
     public async Task<Ilan?> GetirById(string id)
     {
         return await _ilanlar.Find(i => i.Id == id).FirstOrDefaultAsync();
+    }
+
+    public async Task<List<Ilan>> KullanicininIlanlariniGetir(string kullaniciId)
+    {
+        return await _ilanlar.Find(i => i.KullaniciId == kullaniciId).ToListAsync();
     }
 }

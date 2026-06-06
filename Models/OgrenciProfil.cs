@@ -7,13 +7,13 @@ namespace SmartCityHub.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string? Id { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public required string KullaniciId { get; set; }
         public required string Bolum { get; set; }
-        public required int seviye { get; set; }
-        public required List<string> ilgiAlanlari { get; set; }
+        public required int Seviye { get; set; }
+        public required List<string> IlgiAlanlari { get; set; }
         public required string Hakkinda { get; set; }
     }
 }

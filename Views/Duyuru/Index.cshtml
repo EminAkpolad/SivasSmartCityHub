@@ -1,8 +1,10 @@
 @model List<SmartCityHub.Models.Duyuru>
+@using System.Security.Claims
 
 @{
     ViewData["Title"] = "Duyurular";
-    bool isAdmin = true; 
+    // Admin olup olmadığını tek bir yerde kontrol et
+    bool isAdmin = User.IsInRole("Admin");
 }
 
 <div class="container my-5">
@@ -11,7 +13,9 @@
             <h2 class="fw-bold mb-1">Kampüs Duyuruları</h2>
             <p class="text-muted mb-0">Sivas Cumhuriyet Üniversitesi gelişmeler.</p>
         </div>
-        @if (isAdmin)
+        
+        @* Yeni Ekle butonu: Giriş yapmış herkes veya sadece Admin görebilsin (Senin tercihin) *@
+        @if (User.Identity.IsAuthenticated)
         {
             <div class="col-12 col-md-4 text-center text-md-end">
                 <a href="/Duyuru/Ekle" class="btn btn-danger btn-lg w-100 w-md-auto shadow-sm">
@@ -37,7 +41,6 @@
                     <div class="card shadow-sm h-100 border-start border-danger border-4">
                         <div class="card-body p-4">
                             <div class="row align-items-center g-3">
-                                
                                 <div class="col-12 col-md-3 text-center">
                                     <img src="@(string.IsNullOrEmpty(duyuru.ResimUrl) ? "https://via.placeholder.com/150x100?text=Duyuru" : duyuru.ResimUrl)" 
                                          alt="Afiş" class="img-fluid rounded border w-100" style="max-height: 140px; object-fit: cover;">
@@ -48,17 +51,11 @@
                                         <h4 class="fw-bold text-dark mb-0 text-center text-md-start w-100 w-md-auto">@duyuru.Baslik</h4>
                                         <div class="d-flex gap-1 ms-auto ms-md-0">
                                             @if (duyuru.onem == SmartCityHub.Models.Duyuru.OnemSeviyesi.Acil)
-                                            {
-                                                <span class="badge bg-danger">Acil</span>
-                                            }
+                                            { <span class="badge bg-danger">Acil</span> }
                                             else if (duyuru.onem == SmartCityHub.Models.Duyuru.OnemSeviyesi.Uyari)
-                                            {
-                                                <span class="badge bg-warning text-dark">Uyarı</span>
-                                            }
+                                            { <span class="badge bg-warning text-dark">Uyarı</span> }
                                             else
-                                            {
-                                                <span class="badge bg-info text-dark">ℹBilgi</span>
-                                            }
+                                            { <span class="badge bg-info text-dark">ℹBilgi</span> }
                                             <span class="badge bg-light text-dark border">@duyuru.OlusturmaTarihi.ToString("dd.MM.yyyy")</span>
                                         </div>
                                     </div>
@@ -71,7 +68,8 @@
                                         <div class="d-flex gap-2 w-100 w-sm-auto justify-content-end">
                                             <a href="/Duyuru/Detay/@duyuru.Id" class="btn btn-outline-secondary btn-sm">İncele</a>
                                             
-                                            @if (isAdmin)
+                                            @* GÜVENLİK KONTROLÜ: Sahibi veya Admin ise göster *@
+                                            @if (User.Identity.IsAuthenticated && (duyuru.KullaniciId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value || isAdmin))
                                             {
                                                 <a href="/Duyuru/Guncelle/@duyuru.Id" class="btn btn-outline-warning btn-sm">Düzenle</a>
                                                 
@@ -83,7 +81,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

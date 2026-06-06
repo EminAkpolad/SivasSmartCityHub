@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4" style="color: #0f172a; font-weight: 800;">
+                        Öğrenci Kaydı
+                    </h2>
+                    
+                    @if (ViewBag.Hata != null)
+                    {
+                        <div class="alert alert-danger text-center">@ViewBag.Hata</div>
+                    }
+
+                    <form asp-action="Kayit" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">Kullanıcı Adı</label>
+                            <input name="KullaniciAdi" class="form-control" placeholder="Örn: ornek_kullanici" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">Email Adresi</label>
+                            <input name="Email" type="email" class="form-control" placeholder="mail@ornek.com" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">Şifre</label>
+                            <input name="Password" type="password" class="form-control" placeholder="••••••••" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-secondary">Bölümünüz</label>
+                            <input name="Bolum" class="form-control" placeholder="Örn: Bilgisayar Programcılığı" required />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-modern-primary py-2 fs-5">Kayıt Ol</button>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <span class="text-muted small">Zaten hesabın var mı?</span>
+                            <a asp-action="Giris" class="text-decoration-none small" style="color: #e21d3c; font-weight: 600;">Giriş Yap</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

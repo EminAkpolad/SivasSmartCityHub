@@ -12,6 +12,8 @@ namespace SmartCityHub.Models
         public required string Baslik { get; set; }
         public required string Aciklama { get; set; }
 
+        public string kullaniciId { get; set; }
+
         public required string OlusturanId { get; set; }
 
         public DateTime TarihSaat { get; set; }

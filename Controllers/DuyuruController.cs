@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartCityHub.Models;
+using System.Security.Claims;
 
 namespace SmartCityHub.Controllers
 {
@@ -27,6 +28,8 @@ namespace SmartCityHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Ekle(Duyuru yeniDuyuru, IFormFile? Resim)
         {
+             var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
                 if (Resim != null && Resim.Length > 0)
@@ -47,7 +50,7 @@ namespace SmartCityHub.Controllers
                     yeniDuyuru.ResimUrl = "/uploads/" + dosyaAdi;
                 }
 
-                await _duyuruService.Ekle(yeniDuyuru);
+                await _duyuruService.Ekle(yeniDuyuru,kullaniciId);
                 return RedirectToAction(nameof(Index));
             }
             return View(yeniDuyuru);
@@ -67,7 +70,8 @@ namespace SmartCityHub.Controllers
                 return NotFound();
             }
             var duyuru = await _duyuruService.GetirById(id);
-            if (duyuru == null){
+            if (duyuru == null)
+            {
                 return NotFound();
             }
             return View(duyuru);
@@ -80,7 +84,7 @@ namespace SmartCityHub.Controllers
             {
                 return NotFound();
             }
-            var duyuru=await _duyuruService.GetirById(id);
+            var duyuru = await _duyuruService.GetirById(id);
             if (duyuru == null)
             {
                 return NotFound();
@@ -89,20 +93,22 @@ namespace SmartCityHub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Guncelle(Duyuru guncelDuyuru,IFormFile? Resim)
+        public async Task<IActionResult> Guncelle(Duyuru guncelDuyuru, IFormFile? Resim)
         {
+            var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
-                if(Resim!=null && Resim.Length > 0)
+                if (Resim != null && Resim.Length > 0)
                 {
-                    var dosyaAdi=Guid.NewGuid().ToString() + Path.GetExtension(Resim.FileName);
-                    var yol= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","uploads",dosyaAdi);
+                    var dosyaAdi = Guid.NewGuid().ToString() + Path.GetExtension(Resim.FileName);
+                    var yol = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", dosyaAdi);
 
-                    using (var stream=new FileStream(yol, FileMode.Create))
+                    using (var stream = new FileStream(yol, FileMode.Create))
                     {
                         await Resim.CopyToAsync(stream);
                     }
-                    guncelDuyuru.ResimUrl="/uploads/"+dosyaAdi;
+                    guncelDuyuru.ResimUrl = "/uploads/" + dosyaAdi;
                 }
                 await _duyuruService.Guncelle(guncelDuyuru);
                 return RedirectToAction("Index");

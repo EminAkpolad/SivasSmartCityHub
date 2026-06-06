@@ -18,5 +18,6 @@ namespace SmartCityHub.Models
         public DateTime CreateAt { get; set; } = DateTime.Now;
 
         public bool Aktiflik { get; set; } = true;
+        public string Rol { get; set; } = "Standart";
     }
 }

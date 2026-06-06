@@ -39,8 +39,9 @@ public class DuyuruService
         return duyurular;
     }
 
-    public async Task Ekle(Duyuru YeniDuyuru)
+    public async Task Ekle(Duyuru YeniDuyuru,string kullaniciId)
     {
+        YeniDuyuru.KullaniciId = kullaniciId;
         YeniDuyuru.OlusturmaTarihi = DateTime.Now;
 
         await _duyurular.InsertOneAsync(YeniDuyuru);
@@ -58,6 +59,7 @@ public class DuyuruService
     }
 
     public async Task Guncelle(Duyuru GuncelDuyuru)
+    
     {
         var result = await _duyurular.ReplaceOneAsync(i => i.Id == GuncelDuyuru.Id, GuncelDuyuru);
 

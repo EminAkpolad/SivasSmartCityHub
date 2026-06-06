@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using SmartCityHub.Models;
 using SmartCityHub.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SmartCityHub.Controllers
 {
@@ -29,6 +32,8 @@ namespace SmartCityHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Ekle(Ilan YeniIlan, IFormFile? resimDosyasi)
         {
+            var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
                 if (resimDosyasi != null && resimDosyasi.Length > 0)
@@ -52,8 +57,7 @@ namespace SmartCityHub.Controllers
                 YeniIlan.Tarih = DateTime.Now;
                 YeniIlan.Aktifmi = true;
 
-                await _ilanService.Ekle(YeniIlan);
-
+                await _ilanService.Ekle(YeniIlan, kullaniciId);
                 return RedirectToAction("Index");
             }
             foreach (var modelState in ModelState.Values)
@@ -77,10 +81,27 @@ namespace SmartCityHub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Guncelle(string id, Ilan GuncelIlan)
+        public async Task<IActionResult> Guncelle(string id, Ilan GuncelIlan, IFormFile? Resim)
         {
+            var kullaniciId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (kullaniciId == null) return RedirectToAction("Giris", "Hesap");
             if (ModelState.IsValid)
             {
+                if (Resim != null && Resim.Length > 0)
+                {
+                    var dosyaAdi = Guid.NewGuid().ToString() + Path.GetExtension(Resim.FileName);
+                    var yol = Path.Combine(Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "uploads",
+                    dosyaAdi
+                    );
+
+                    using (var stream = new FileStream(yol, FileMode.Create))
+                    {
+                        await Resim.CopyToAsync(stream);
+                    }
+                    GuncelIlan.ResimUrl = "/uploads/" + dosyaAdi;
+                }
                 await _ilanService.Guncelle(id, GuncelIlan);
                 return RedirectToAction(nameof(Index));
             }
@@ -90,7 +111,13 @@ namespace SmartCityHub.Controllers
         [HttpPost]
         public async Task<IActionResult> Sil(string id)
         {
-            await _ilanService.Sil(id);
+            var ilan = await _ilanService.GetirById(id);
+            var girisYapanId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (ilan != null && (ilan.KullaniciId == girisYapanId || User.IsInRole("Admin")))
+            {
+                await _ilanService.Sil(id);
+            }
             return RedirectToAction(nameof(Index));
         }
 

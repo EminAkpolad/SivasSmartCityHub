@@ -10,6 +10,9 @@ namespace SmartCityHub.Models
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
         public string? Id { get; set; }
+
+
+        public string? KullaniciId { get; set; }
         public required string Baslik { get; set; }
         public required string Icerik { get; set; }
 
