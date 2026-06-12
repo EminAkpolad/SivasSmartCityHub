@@ -18,8 +18,6 @@ namespace SmartCityHub.Services
 
         public IMongoCollection<Bolge> Bolgeler => _database.GetCollection<Bolge>("Bolge");
         public IMongoCollection<Duyuru> Duyurular => _database.GetCollection<Duyuru>("Duyuru");
-        public IMongoCollection<Etkinlik> Etkinlikler =>
-            _database.GetCollection<Etkinlik>("Etkinlikler");
         public IMongoCollection<Ilan> Ilanlar => _database.GetCollection<Ilan>("Ilan");
         public IMongoCollection<Kullanici> Kullanicilar =>
             _database.GetCollection<Kullanici>("Kullanici");

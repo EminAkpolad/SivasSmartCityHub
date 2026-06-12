@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-white fw-bold">
+        <i class="bi bi-geo-alt-fill text-danger me-2"></i>Kampüs Haritası
+    </div>
+    <div class="card-body p-0">
+        <div id="benimHaritam" style="height: 450px; width: 100%; border-radius: 0 0 8px 8px; z-index: 1;"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        var harita = L.map('benimHaritam').setView([39.708, 37.018], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(harita);
+
+        var isaretci = L.marker([39.708, 37.018]).addTo(harita);
+        isaretci.bindPopup("<b>Sivas Cumhuriyet Üniversitesi</b>").openPopup();
+        
+    });
+</script>

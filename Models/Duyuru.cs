@@ -14,7 +14,7 @@ namespace SmartCityHub.Models
 
         public string? KullaniciId { get; set; }
         public required string Baslik { get; set; }
-        public required string Icerik { get; set; }
+        public string? Icerik { get; set; }
 
         public string? YayinlananId { get; set; }
         public string? ResimUrl { get; set; }

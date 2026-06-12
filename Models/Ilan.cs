@@ -24,6 +24,8 @@ namespace SmartCityHub.Models
         public string? ResimUrl { get; set; }
         public DateTime Tarih { get; set; } = DateTime.Now;
         public string? Konum { get; set; }
+        public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
+
 
         public bool Aktifmi { get; set; } = true;
 

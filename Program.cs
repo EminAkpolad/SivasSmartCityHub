@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IlanService>();
 builder.Services.AddScoped<DuyuruService>();
 builder.Services.AddScoped<OneriService>();
+builder.Services.AddSingleton<SmartCityHub.Models.MongoDbContext>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
